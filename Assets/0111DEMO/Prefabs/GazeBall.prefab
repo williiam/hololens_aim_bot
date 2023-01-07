@@ -368,7 +368,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hostTransform: {fileID: 2393375630183271464}
-  allowedManipulations: -1
+  allowedManipulations: 0
   allowedInteractionTypes: 6
   applyTorque: 1
   springForceSoftness: 0.1
@@ -386,7 +386,7 @@ MonoBehaviour:
   moveLerpTime: 0.001
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
-  enableConstraints: 1
+  enableConstraints: 0
   constraintsManager: {fileID: 2393375630183271468}
   manipulationLogicTypes:
     moveLogicType:
