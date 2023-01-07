@@ -8,8 +8,11 @@ using Text = TMPro.TextMeshPro;
  * TODO
  * 1. GAZE時 disable 手的rayCast
  * 2. GAZE時 ONHOVER 變大?
+ * 3. 計分顯示 hit/時間
+ * 4. rayBall被gaze時不應該有動畫
  * FIXME
  * 1. MENU歪掉
+ * 2. 球生太下面
 */
 
 public class GameManager : MonoBehaviour
@@ -150,7 +153,7 @@ public class GameManager : MonoBehaviour
         switch (ballInteractMode)
         {
             case BallInteractMode.HAND_RAY:
-                BallModeText.text = "RAY";
+                BallModeText.text = "   ";
                 break;
             case BallInteractMode.GAZE_AND_PINCH:
                 BallModeText.text = "GAZE";
