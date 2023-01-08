@@ -7,6 +7,7 @@ public class BallManager : MonoBehaviour
     public static BallManager instance;
     public GameObject rayBallPrefab;
     public GameObject gazeBallPrefab;
+    public GameObject rayAndgazeBallPrefab;
     public GameObject currentModeBallPrefab;
     public GameObject SpawnPoint;
 
@@ -38,6 +39,9 @@ public class BallManager : MonoBehaviour
                 break;
             case BallInteractMode.GAZE_AND_PINCH:
                 currentModeBallPrefab = gazeBallPrefab;
+                break;
+            case BallInteractMode.BOTH:
+                currentModeBallPrefab = rayAndgazeBallPrefab;
                 break;
             default:
                 currentModeBallPrefab = rayBallPrefab;

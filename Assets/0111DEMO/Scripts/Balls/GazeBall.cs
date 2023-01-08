@@ -27,6 +27,10 @@ public class GazeBall : BaseBall
     }
     public override void OnBallHit()
     {
+        if (gameObject==null)
+        {
+            return;
+        }
         Debug.Log("GazeBall OnBallHit");
         onBallHit();
     }

@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,13 +7,7 @@ using Text = TMPro.TextMeshPro;
 
 /*
  * TODO
- * 1. GAZE時 disable 手的rayCast
- * 2. GAZE時 ONHOVER 變大?
- * 3. 計分顯示 hit/時間
- * 4. rayBall被gaze時不應該有動畫
- * FIXME
- * 1. MENU歪掉
- * 2. 球生太下面
+ * 1. RAY + GAZE
 */
 
 public class GameManager : MonoBehaviour
@@ -42,6 +37,8 @@ public class GameManager : MonoBehaviour
     public Text CountDownText;
     public Text HitBallsText;
     public Text BallModeText;
+    public PressableButton ToggleRayBtn;
+    public PressableButton ToggleGazeBtn;
 
     private void Awake()
     {
@@ -54,6 +51,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameState = GameState.START_MENU;
+        ballInteractMode = BallInteractMode.HAND_RAY;
+        OnToggleBallMode(BallInteractMode.HAND_RAY);
         startUI.SetActive(true);
         gameUI.SetActive(true);
         historyUI.SetActive(false);
@@ -148,15 +147,104 @@ public class GameManager : MonoBehaviour
         HitBallsText.text = $"{hitBalls}";
     }
 
-    public void OnUpdateBallMode()
+    public void OnToggleBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+
+                // 若原本模式為GAZE，則切為BOTH
+                if (ballInteractMode == BallInteractMode.GAZE_AND_PINCH)
+                {
+                    ballInteractMode = BallInteractMode.BOTH;
+                }
+                else
+                {
+                    ballInteractMode = BallInteractMode.HAND_RAY;
+                }
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                // 若原本模式為GAZE，則切為BOTH
+                if (ballInteractMode == BallInteractMode.HAND_RAY)
+                {
+                    ballInteractMode = BallInteractMode.BOTH;
+                }
+                else
+                {
+                    ballInteractMode = BallInteractMode.GAZE_AND_PINCH;
+                }
+                break;
+            default:
+                break;
+        }
+            OnUpdateBallModeText();
+    }
+
+    public void OnDetoggleBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+                // 若原本模式為HAND_RAY，則不做事
+                if (ballInteractMode == BallInteractMode.HAND_RAY)
+                {
+                    ToggleRayBtn.ForceSetToggled(true);
+                    return;
+                }
+                // 若原本模式為BOTH，則切為GAZE
+                if (ballInteractMode == BallInteractMode.BOTH)
+                {
+                    ballInteractMode = BallInteractMode.GAZE_AND_PINCH;
+                }
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                // 若原本模式為GAZE_AND_PINCH，則不做事
+                if (ballInteractMode == BallInteractMode.GAZE_AND_PINCH)
+                {
+                    ToggleGazeBtn.ForceSetToggled(true);
+                    return;
+                }
+                // 若原本模式為BOTH，則切為GAZE
+                if (ballInteractMode == BallInteractMode.BOTH)
+                {
+                    ballInteractMode = BallInteractMode.HAND_RAY;
+                }
+                break;
+            default:
+                break;
+        }
+        OnUpdateBallModeText();
+    }
+
+    public void OnUpdateBallModeText()
     {
         switch (ballInteractMode)
         {
             case BallInteractMode.HAND_RAY:
-                BallModeText.text = "   ";
+                BallModeText.text = "RAY";
                 break;
             case BallInteractMode.GAZE_AND_PINCH:
                 BallModeText.text = "GAZE";
+                break;
+            case BallInteractMode.BOTH:
+                BallModeText.text = "BOTH";
+                break;
+            default:
+                break;
+        }
+    }
+    public void OnUpdateBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+                BallModeText.text = "RAY";
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                BallModeText.text = "GAZE";
+                break;
+            case BallInteractMode.BOTH:
+                BallModeText.text = "BOTH";
                 break;
             default:
                 break;
@@ -180,7 +268,8 @@ public enum GameState
 public enum BallInteractMode
 {
     HAND_RAY,
-    GAZE_AND_PINCH
+    GAZE_AND_PINCH,
+    BOTH
 }
 
 public class ScoreHistory
@@ -208,6 +297,8 @@ public class Util
                 return "RAY";
             case BallInteractMode.GAZE_AND_PINCH:
                 return "GAZE";
+            case BallInteractMode.BOTH:
+                return "BOTH";
             default:
                 return "RAY";
         }
