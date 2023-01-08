@@ -199,6 +199,9 @@ MonoBehaviour:
     active: 0
     onEntered:
       m_PersistentCalls:
+        m_Calls: []
+    onExited:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 7319376088404759203}
           m_TargetAssemblyTypeName: GazeBall, Assembly-CSharp
@@ -212,9 +215,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onExited:
-      m_PersistentCalls:
-        m_Calls: []
   isRaySelected:
     active: 0
     onEntered:
