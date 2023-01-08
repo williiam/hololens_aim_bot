@@ -10,9 +10,9 @@ public class HistoryView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // ¨ú±o¾ú¥v¬ö¿ý
+        // ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
         List<ScoreHistory> history = GameManager.instance.scoreHistory;
-        // ²Õ¦¨¾ú¥v¬ö¿ý¦r¦ê 
+        // ï¿½Õ¦ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ 
         string historyStr = CreateStringFromList(history);
         HistoryScoreText.text = historyStr;
     }
@@ -20,9 +20,9 @@ public class HistoryView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ¨ú±o¾ú¥v¬ö¿ý
+        // ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
         List<ScoreHistory> history = GameManager.instance.scoreHistory;
-        // ²Õ¦¨¾ú¥v¬ö¿ý¦r¦ê 
+        // ï¿½Õ¦ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ 
         string historyStr = CreateStringFromList(history);
         HistoryScoreText.text = historyStr;
     }
@@ -39,9 +39,9 @@ public class HistoryView : MonoBehaviour
         {
             string mode = Util.GetBallInteractModeString(item.ballInteractMode);
 
-            // ¨ú¨ì¤p¼ÆÂI«á¤@¦ì
+            // ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Iï¿½ï¿½@ï¿½ï¿½
             float score = (float)System.Math.Round((double)item.hitBalls / item.countdownStartTime, 1);
-            result += $"{count}. {mode} {item.hitBalls} HITS {item.countdownStartTime}s SCROE:{score}\n";
+            result += $"{count}. {mode} {item.hitBalls}hits {item.countdownStartTime}s [{score}hits/s] \n";
             count++;
         }
 
