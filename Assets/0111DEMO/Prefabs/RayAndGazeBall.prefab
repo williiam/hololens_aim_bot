@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 15bea05ae1c74194fa218e0d4a8a1b25, type: 2}
+  - {fileID: 2100000, guid: ecf898134fc873c48b1263a093f12178, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -262,21 +262,9 @@ MonoBehaviour:
           m_MethodName: set_material
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0,
-              type: 2}
+            m_ObjectArgument: {fileID: 10302, guid: 0000000000000000f000000000000000,
+              type: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7319376088404759203}
-          m_TargetAssemblyTypeName: GazeBall, Assembly-CSharp
-          m_MethodName: OnHover
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -284,20 +272,7 @@ MonoBehaviour:
           m_CallState: 2
     onExited:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2393375630183271466}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_material
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: 3e399f4c8f94c07469d949416faa944b,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   isGazePinchHovered:
     active: 0
     onEntered:
