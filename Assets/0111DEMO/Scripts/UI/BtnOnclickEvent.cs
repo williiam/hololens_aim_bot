@@ -31,12 +31,12 @@ public class BtnOnclickEvent : MonoBehaviour
 
     public void OnSet10Sec()
     {
-        GameManager.instance.OnUpdateCountDownTime(10f);
+        GameManager.instance.OnUpdateCountDownStartTime(10f);
     }
 
     public void OnSet30Sec()
     {
-        GameManager.instance.OnUpdateCountDownTime(30f);
+        GameManager.instance.OnUpdateCountDownStartTime(30f);
     }
 
     public void OnGameStart()

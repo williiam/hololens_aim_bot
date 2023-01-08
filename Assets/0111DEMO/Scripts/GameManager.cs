@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.START_MENU;
         ballInteractMode = BallInteractMode.HAND_RAY;
         OnToggleBallMode(BallInteractMode.HAND_RAY);
+        InitScoreHistory();
         startUI.SetActive(true);
         gameUI.SetActive(true);
         historyUI.SetActive(false);
@@ -98,11 +99,19 @@ public class GameManager : MonoBehaviour
 
     public void OnGamePause()
     {
+        if(gameState==GameState.START_MENU|| gameState == GameState.HISTORY_MENU)
+        {
+            return;
+        }
         gameState = GameState.IN_GAME_PAUSE;
     }
 
     public void OnGameResume()
     {
+        if (gameState == GameState.START_MENU || gameState == GameState.HISTORY_MENU)
+        {
+            return;
+        }
         gameState = GameState.IN_GAME;
     }
 
@@ -129,14 +138,22 @@ public class GameManager : MonoBehaviour
     {
         // 回到主畫面
         gameState = GameState.START_MENU;
+        OnUpdateCountDownStartTime(30f);
+        hitBalls = 0;
+        UpdateUI();
         startUI.SetActive(true);
         gameUI.SetActive(true);
         historyUI.SetActive(false);
     }
 
+    // 儲存此次遊玩成績
+    private void InitScoreHistory()
+    {
+        // TODO: 從DISK初始化history
+    }
     private void SaveScore()
     {
-        // 儲存此次遊玩成績
+        // TODO: 存到DISK
         scoreHistory.Add(new ScoreHistory(ballInteractMode, hitBalls, countdownStartTime));
     }
     
@@ -250,9 +267,10 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public void OnUpdateCountDownTime(float time)
+    public void OnUpdateCountDownStartTime(float time)
     {
         countdownStartTime = time;
+        countdownTime = time;
         CountDownText.text = $"{time}s";
     }
 }

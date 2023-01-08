@@ -41,7 +41,7 @@ public class HistoryView : MonoBehaviour
 
             // 取到小數點後一位
             float score = (float)System.Math.Round((double)item.hitBalls / item.countdownStartTime, 1);
-            result += $"{count}. {mode} {item.hitBalls} HITS {item.countdownStartTime}s {score}\n";
+            result += $"{count}. {mode} {item.hitBalls} HITS {item.countdownStartTime}s SCROE:{score}\n";
             count++;
         }
 
