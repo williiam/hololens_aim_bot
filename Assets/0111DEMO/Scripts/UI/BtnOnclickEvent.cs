@@ -4,25 +4,39 @@ using UnityEngine;
 
 public class BtnOnclickEvent : MonoBehaviour
 {
+    public void OnToggleRay()
+    {
+        GameManager.instance.OnToggleBallMode(BallInteractMode.HAND_RAY);
+    }
+    public void OnDeToggleRay()
+    {
+        GameManager.instance.OnDetoggleBallMode(BallInteractMode.HAND_RAY);
+    }
+    public void OnToggleGaze()
+    {
+        GameManager.instance.OnToggleBallMode(BallInteractMode.GAZE_AND_PINCH);
+    }
+    public void OnDeToggleGaze()
+    {
+        GameManager.instance.OnDetoggleBallMode(BallInteractMode.GAZE_AND_PINCH);
+    }
     public void OnSetHandRay()
     {
-        GameManager.instance.ballInteractMode = BallInteractMode.HAND_RAY;
-        GameManager.instance.OnUpdateBallMode();
+        GameManager.instance.OnUpdateBallMode(BallInteractMode.HAND_RAY);
     }
     public void OnSetGaze()
     {
-        GameManager.instance.ballInteractMode = BallInteractMode.GAZE_AND_PINCH;
-        GameManager.instance.OnUpdateBallMode();
+        GameManager.instance.OnUpdateBallMode(BallInteractMode.GAZE_AND_PINCH);
     }
 
     public void OnSet10Sec()
     {
-        GameManager.instance.OnUpdateCountDownTime(10f);
+        GameManager.instance.OnUpdateCountDownStartTime(10f);
     }
 
     public void OnSet30Sec()
     {
-        GameManager.instance.OnUpdateCountDownTime(30f);
+        GameManager.instance.OnUpdateCountDownStartTime(30f);
     }
 
     public void OnGameStart()

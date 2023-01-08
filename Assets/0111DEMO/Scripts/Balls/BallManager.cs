@@ -7,6 +7,7 @@ public class BallManager : MonoBehaviour
     public static BallManager instance;
     public GameObject rayBallPrefab;
     public GameObject gazeBallPrefab;
+    public GameObject rayAndgazeBallPrefab;
     public GameObject currentModeBallPrefab;
     public GameObject SpawnPoint;
 
@@ -39,6 +40,9 @@ public class BallManager : MonoBehaviour
             case BallInteractMode.GAZE_AND_PINCH:
                 currentModeBallPrefab = gazeBallPrefab;
                 break;
+            case BallInteractMode.BOTH:
+                currentModeBallPrefab = rayAndgazeBallPrefab;
+                break;
             default:
                 currentModeBallPrefab = rayBallPrefab;
                 break;
@@ -69,7 +73,7 @@ public class BallManager : MonoBehaviour
         Vector3 spawnPointPos = SpawnPoint.transform.position;
 
         // 以spawnPoint為中心一定範圍內隨機位置產生球
-        Vector3 randomPos = new Vector3(Random.Range(spawnPointPos.x - 0.5f, spawnPointPos.x + 0.5f), Random.Range(spawnPointPos.y - 0.5f, spawnPointPos.y + 0.5f), Random.Range(spawnPointPos.z - 0.5f, spawnPointPos.z + 0.5f));
+        Vector3 randomPos = new Vector3(Random.Range(spawnPointPos.x - 0.5f, spawnPointPos.x + 0.5f), Random.Range(spawnPointPos.y, spawnPointPos.y + 0.5f), Random.Range(spawnPointPos.z - 0.5f, spawnPointPos.z + 0.5f));
         Instantiate(currentModeBallPrefab, randomPos, Quaternion.identity);
     }
 

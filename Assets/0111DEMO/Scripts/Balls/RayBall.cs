@@ -17,6 +17,10 @@ public class RayBall : BaseBall
     }
     public override void OnBallHit()
     {
+        if (gameObject == null)
+        {
+            return;
+        }
         onBallHit();
     }
 }

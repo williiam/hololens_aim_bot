@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +7,7 @@ using Text = TMPro.TextMeshPro;
 
 /*
  * TODO
- * 1. GAZE disable もrayCast
- * 2. GAZE ONHOVER 跑?
- * FIXME
- * 1. MENU琻奔
+ * 1. RAY + GAZE
 */
 
 public class GameManager : MonoBehaviour
@@ -39,6 +37,8 @@ public class GameManager : MonoBehaviour
     public Text CountDownText;
     public Text HitBallsText;
     public Text BallModeText;
+    public PressableButton ToggleRayBtn;
+    public PressableButton ToggleGazeBtn;
 
     private void Awake()
     {
@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameState = GameState.START_MENU;
+        ballInteractMode = BallInteractMode.HAND_RAY;
+        OnToggleBallMode(BallInteractMode.HAND_RAY);
+        InitScoreHistory();
         startUI.SetActive(true);
         gameUI.SetActive(true);
         historyUI.SetActive(false);
@@ -96,11 +99,19 @@ public class GameManager : MonoBehaviour
 
     public void OnGamePause()
     {
+        if(gameState==GameState.START_MENU|| gameState == GameState.HISTORY_MENU)
+        {
+            return;
+        }
         gameState = GameState.IN_GAME_PAUSE;
     }
 
     public void OnGameResume()
     {
+        if (gameState == GameState.START_MENU || gameState == GameState.HISTORY_MENU)
+        {
+            return;
+        }
         gameState = GameState.IN_GAME;
     }
 
@@ -127,14 +138,22 @@ public class GameManager : MonoBehaviour
     {
         // 礶
         gameState = GameState.START_MENU;
+        OnUpdateCountDownStartTime(30f);
+        hitBalls = 0;
+        UpdateUI();
         startUI.SetActive(true);
         gameUI.SetActive(true);
         historyUI.SetActive(false);
     }
 
+    // 纗Ω笴Θ罿
+    private void InitScoreHistory()
+    {
+        // TODO: 眖DISK﹍てhistory
+    }
     private void SaveScore()
     {
-        // 纗Ω笴Θ罿
+        // TODO: DISK
         scoreHistory.Add(new ScoreHistory(ballInteractMode, hitBalls, countdownStartTime));
     }
     
@@ -145,7 +164,76 @@ public class GameManager : MonoBehaviour
         HitBallsText.text = $"{hitBalls}";
     }
 
-    public void OnUpdateBallMode()
+    public void OnToggleBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+
+                // 璝セ家ΑGAZE玥ちBOTH
+                if (ballInteractMode == BallInteractMode.GAZE_AND_PINCH)
+                {
+                    ballInteractMode = BallInteractMode.BOTH;
+                }
+                else
+                {
+                    ballInteractMode = BallInteractMode.HAND_RAY;
+                }
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                // 璝セ家ΑGAZE玥ちBOTH
+                if (ballInteractMode == BallInteractMode.HAND_RAY)
+                {
+                    ballInteractMode = BallInteractMode.BOTH;
+                }
+                else
+                {
+                    ballInteractMode = BallInteractMode.GAZE_AND_PINCH;
+                }
+                break;
+            default:
+                break;
+        }
+            OnUpdateBallModeText();
+    }
+
+    public void OnDetoggleBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+                // 璝セ家ΑHAND_RAY玥ぃ暗ㄆ
+                if (ballInteractMode == BallInteractMode.HAND_RAY)
+                {
+                    ToggleRayBtn.ForceSetToggled(true);
+                    return;
+                }
+                // 璝セ家ΑBOTH玥ちGAZE
+                if (ballInteractMode == BallInteractMode.BOTH)
+                {
+                    ballInteractMode = BallInteractMode.GAZE_AND_PINCH;
+                }
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                // 璝セ家ΑGAZE_AND_PINCH玥ぃ暗ㄆ
+                if (ballInteractMode == BallInteractMode.GAZE_AND_PINCH)
+                {
+                    ToggleGazeBtn.ForceSetToggled(true);
+                    return;
+                }
+                // 璝セ家ΑBOTH玥ちGAZE
+                if (ballInteractMode == BallInteractMode.BOTH)
+                {
+                    ballInteractMode = BallInteractMode.HAND_RAY;
+                }
+                break;
+            default:
+                break;
+        }
+        OnUpdateBallModeText();
+    }
+
+    public void OnUpdateBallModeText()
     {
         switch (ballInteractMode)
         {
@@ -155,13 +243,34 @@ public class GameManager : MonoBehaviour
             case BallInteractMode.GAZE_AND_PINCH:
                 BallModeText.text = "GAZE";
                 break;
+            case BallInteractMode.BOTH:
+                BallModeText.text = "BOTH";
+                break;
             default:
                 break;
         }
     }
-    public void OnUpdateCountDownTime(float time)
+    public void OnUpdateBallMode(BallInteractMode newMode)
+    {
+        switch (newMode)
+        {
+            case BallInteractMode.HAND_RAY:
+                BallModeText.text = "RAY";
+                break;
+            case BallInteractMode.GAZE_AND_PINCH:
+                BallModeText.text = "GAZE";
+                break;
+            case BallInteractMode.BOTH:
+                BallModeText.text = "BOTH";
+                break;
+            default:
+                break;
+        }
+    }
+    public void OnUpdateCountDownStartTime(float time)
     {
         countdownStartTime = time;
+        countdownTime = time;
         CountDownText.text = $"{time}s";
     }
 }
@@ -177,7 +286,8 @@ public enum GameState
 public enum BallInteractMode
 {
     HAND_RAY,
-    GAZE_AND_PINCH
+    GAZE_AND_PINCH,
+    BOTH
 }
 
 public class ScoreHistory
@@ -205,6 +315,8 @@ public class Util
                 return "RAY";
             case BallInteractMode.GAZE_AND_PINCH:
                 return "GAZE";
+            case BallInteractMode.BOTH:
+                return "BOTH";
             default:
                 return "RAY";
         }

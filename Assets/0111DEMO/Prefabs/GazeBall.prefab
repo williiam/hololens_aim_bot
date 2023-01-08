@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2877a47ddf5b5d04d8c3cac2862ddf25, type: 2}
+  - {fileID: 2100000, guid: 19fcd0c778ffd754ba73ceb4b5e98aee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -369,7 +369,7 @@ MonoBehaviour:
       m_Calls: []
   hostTransform: {fileID: 2393375630183271464}
   allowedManipulations: 0
-  allowedInteractionTypes: 6
+  allowedInteractionTypes: 4
   applyTorque: 1
   springForceSoftness: 0.1
   springTorqueSoftness: 0.1

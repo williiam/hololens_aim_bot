@@ -38,7 +38,10 @@ public class HistoryView : MonoBehaviour
         foreach (ScoreHistory item in list)
         {
             string mode = Util.GetBallInteractModeString(item.ballInteractMode);
-            result += $"{count}. {mode} {item.countdownStartTime}s {item.hitBalls} HITS \n";
+
+            // 取到小數點後一位
+            float score = (float)System.Math.Round((double)item.hitBalls / item.countdownStartTime, 1);
+            result += $"{count}. {mode} {item.hitBalls} HITS {item.countdownStartTime}s SCROE:{score}\n";
             count++;
         }
 
